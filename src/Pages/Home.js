@@ -8,7 +8,7 @@ function Home(){
         <div className="main">
             <Typography>Your are at Home Page</Typography>
             <p></p>
-            <Link to="/login" style={{ textDecoration: 'none'}}><ButtonComponent text="Sign In"></ButtonComponent></Link>
+            <Link to="/signin" style={{ textDecoration: 'none'}}><ButtonComponent text="Sign In"></ButtonComponent></Link>
             <p></p>
             <Link to="/create" style={{ textDecoration: 'none'}}><ButtonComponent text="Sign Up"></ButtonComponent></Link>
             <p></p>
