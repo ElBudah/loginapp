@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ButtonComponent from "../Components/Button";
 import {Link} from 'react-router-dom';
+import axios from "axios";
 
 function SignIn(){
 
@@ -19,6 +20,9 @@ function SignIn(){
 
     const onSubmitData = (data) => {
         console.log(data.txtName);
+        axios.post('http://localhost:5000/users/signup', data).then(response =>{
+            
+        })
         reset();
     }
 
@@ -34,7 +38,7 @@ function SignIn(){
                 <p className="errors">{errors.txtPassword?.message}</p>
                 <Button type="submit" variant="contained" color="primary" style={{maxWidth: '130px', maxHeight: '50px', minWidth: '130px', minHeight:'50px'}} >Submit</Button>
                 <p></p>
-                <Link to="/" style={{textDecoration: 'none'}}><Button color="primary" variant="contained" style={{maxWidth: '130px', maxHeight: '50px', minWidth: '130px', minHeight:'50px'}}>Return</Button></Link>
+                <Link to="/" style={{textDecoration: 'none'}}><Button color="primary" variant="contained" style={{maxWidth: '130px', maxHeight: '50px', minWidth: '130px', minHeight:'50px'}}n>Return</Button></Link>
             </form>
             
         </div>
