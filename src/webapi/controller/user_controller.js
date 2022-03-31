@@ -5,13 +5,46 @@ app.use(express.json());
 
 
 
-exports.signup = async (req,res) => {
+exports.signup = async (req, res) => {
 
     const database = require('../db');
     const User = require('../user');
     await database.sync();
 
-    let txtName = req.body.txtName;
-    console.log(txtName);
+    let txtName = req.body.Name;
+    let txtPassword = req.body.Password;
 
+    console.log(txtName);
+    console.log(txtPassword);
+
+    var validation = false;
+
+    //function to check is there is a User with the same name
+    const NewUserValidation = await User.findOne({ where: { name: txtName } }).then(
+        count => {
+            console.log(count)
+            if(count == null){
+                console.log(' null')
+                User.create({
+                    name: txtName,
+                    password: txtPassword,
+                })
+                validation = true;
+            }
+            else{
+                console.log('User already created')
+
+            }
+        }
+    )
+    
+        //Create
+        /* const NewUser = await User.create({
+            name: txtName,
+            password: txtPassword,
+        }) */
+    
+    console.log("Validation just before exiting: "+ validation);
+    return res.json(validation);
 }
+

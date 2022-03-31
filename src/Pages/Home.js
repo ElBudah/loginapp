@@ -10,7 +10,7 @@ function Home(){
             <p></p>
             <Link to="/signin" style={{ textDecoration: 'none'}}><ButtonComponent text="Sign In"></ButtonComponent></Link>
             <p></p>
-            <Link to="/create" style={{ textDecoration: 'none'}}><ButtonComponent text="Sign Up"></ButtonComponent></Link>
+            <Link to="/signup" style={{ textDecoration: 'none'}}><ButtonComponent text="Sign Up"></ButtonComponent></Link>
             <p></p>
             <Link to="/delete" style={{ textDecoration: 'none'}}><ButtonComponent text="Delete"></ButtonComponent></Link>
             <p></p>

@@ -16,6 +16,7 @@
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
     "sequelize": "^6.17.0",
+    "sweetalert2": "^11.4.8",
     "tedious": "^14.4.0",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
