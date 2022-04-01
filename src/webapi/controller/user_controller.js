@@ -25,6 +25,7 @@ exports.signup = async (req, res) => {
             console.log(count)
             if(count == null){
                 console.log(' null')
+                // New User Creation
                 User.create({
                     name: txtName,
                     password: txtPassword,
@@ -48,3 +49,19 @@ exports.signup = async (req, res) => {
     return res.json(validation);
 }
 
+exports.deleteall = async(req, res) =>{
+
+    console.log('inside destroyer')
+    const database = require('../db');
+    const User = require('../user');
+    await database.sync();
+
+    await User.destroy({
+        where: {},
+        truncate: true
+    })
+
+    const text = 'done'
+
+    return res.json(text);
+}

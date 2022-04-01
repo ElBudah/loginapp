@@ -7,8 +7,9 @@ const route = require('./routes/user_routes');
 app.use(cors());
 app.use(express.json())
 
-
+//Route for user
 app.use('/users', route);
+
 
 
 
