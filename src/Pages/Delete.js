@@ -35,7 +35,8 @@ function Delete(){
             <ButtonComponent text="Delete Id" function={deleteid}></ButtonComponent>
             <p></p>
             <Select>
-                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={10}s
+                >Ten</MenuItem>
 
             </Select>
             <p></p>
