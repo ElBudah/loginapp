@@ -11,10 +11,6 @@ app.use(express.json())
 app.use('/users', route);
 
 
-
-
-
-
 app.listen(5000, ()=>{
     console.log('The webser is runnnig...');
 })

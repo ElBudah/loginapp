@@ -8,6 +8,8 @@ app.use(express.json());
 //Route for SignUp a new User
 route.post('/signup', user_controller.signup);
 
+//Route for SignIn a new user
+route.post('/signin', user_controller.sigin);
 
 //Route for delete all User
 route.get('/deleteall', user_controller.deleteall);

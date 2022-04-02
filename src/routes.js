@@ -30,7 +30,7 @@ function Router() {
                 </PrivateRoute>} />
                 <Route path="/signin" element={<SignIn />}/>
                 <Route path="/signup" element={<SignUp />}/>
-                <Route path="/show" element={<Show />}/>
+                <Route path="/read" element={<Show />}/>
                 <Route path="/delete" element={<Delete />}/>
             </Routes>
         </BrowserRouter>

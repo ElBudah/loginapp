@@ -16,19 +16,30 @@ function SignIn(){
 
     const onSubmitData = (data) => {
         console.log(data.Name);
-       
+        axios.post('http://localhost:5000/users/signin', data).then(response => {
+                console.log(response.data);
+                if(response.data){
+                    window.location.href = "/private"
+                }
+                else(
+                    reset()
+                )
+        })
     }
 
     return(
         <div className="main">
             <Typography>You are at Sign In page</Typography>
             <form onSubmit={handleSubmit(onSubmitData)}>
-                <TextField {...register("txtName")} color="primary" label="Name" ></TextField>
+                <TextField {...register("Name")} color="primary" label="Name" ></TextField>
                 <p></p>
                 <p className="errors">{errors.Name?.message}</p>
-                <TextField {...register("txtPassword")} color="primary" label="Password" type={"password"}></TextField>
+                <TextField {...register("Password")} color="primary" label="Password" type={"password"}></TextField>
                 <p></p>
                 <p className="errors">{errors.Password?.message}</p>
+                <TextField {...register("Email")} autoComplete="off" color="primary" label="Email"></TextField>
+                <p></p>
+                <p className="erros">{errors.Email?.message}</p>
                 <Button type="submit" variant="contained" color="primary" style={{maxWidth: '130px', maxHeight: '50px', minWidth: '130px', minHeight:'50px'}} >Submit</Button>
                 <p></p>
                 <Link to="/" style={{textDecoration: 'none'}}><Button color="primary" variant="contained" style={{maxWidth: '130px', maxHeight: '50px', minWidth: '130px', minHeight:'50px'}}>Return</Button></Link>

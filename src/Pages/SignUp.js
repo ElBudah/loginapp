@@ -25,6 +25,13 @@ function SignUp() {
                     text: 'Failed',
                 })
             }
+            if(response.data == true){
+               swal.fire({
+                   icon: 'success',
+                   title: 'Success',
+                   text: 'User created successfully'
+               }) 
+            }
         })
         reset();
     }
@@ -33,12 +40,15 @@ function SignUp() {
         <div className="main">
             <Typography>Sign Up Page</Typography>
             <form onSubmit={handleSubmit(onSubmitData)}>
-                <TextField label="Name"{...register('Name')}></TextField>
+                <TextField label="Name"{...register('Name')} autoComplete="off"></TextField>
                 <p></p>
                 <p className="errors">{errors.Name?.message}</p>
-                <TextField label="Password" {...register('Password')} type="password"></TextField>
+                <TextField label="Password" {...register('Password')} autoComplete="off" type="password"></TextField>
                 <p></p>
                 <p className="errors">{errors.Password?.message}</p>
+                <TextField label="Email" {...register('Email')} autoComplete="off"></TextField>
+                <p></p>
+                <p className="errors">{errors.Email?.message}</p>
                 <Button type="submit" variant="contained" color="primary" style={{maxWidth: '130px', maxHeight: '50px', minWidth: '130px', minHeight:'50px'}}>Submit</Button>
                 <p></p>
                 <Link to="/" style={{ textDecoration : 'none'}}><ButtonComponent text="Return"></ButtonComponent></Link>
