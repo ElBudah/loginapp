@@ -78,6 +78,30 @@ exports.sigin = async(req,res) => {
     return res.json(login);
 }
 
+//Read all data
+exports.read = async(req,res) =>{
+
+    const database = require('../db');
+    const User = require('../user');
+    await database.sync();
+
+    const AllData = await User.findAll({
+        raw: true
+    });
+
+    var TableNames =  AllData.map((item) => {
+        return item.name;
+    })
+
+    var TableIDs = AllData.map((item)=> {
+        return item.id;
+    })
+
+
+    return res.json(AllData);
+
+}
+
 
 //Delete All USers Code
 exports.deleteall = async(req, res) =>{

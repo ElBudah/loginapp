@@ -11,6 +11,9 @@ route.post('/signup', user_controller.signup);
 //Route for SignIn a new user
 route.post('/signin', user_controller.sigin);
 
+//Route for read all data
+route.get('/read', user_controller.read);
+
 //Route for delete all User
 route.get('/deleteall', user_controller.deleteall);
 

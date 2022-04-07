@@ -6,6 +6,11 @@
   margin-top: 10mm;
 }
 
+.table{
+  height: 400;
+  width: 100%;
+}
+
 .errors{
   color: red;
 }
