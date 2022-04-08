@@ -1,75 +1,102 @@
-import { Paper, TableContainer, TableHead, Typography, TableRow, TableCell, Table, TableBody} from "@material-ui/core";
+import { Paper, TableContainer, TableHead, Typography, TableRow, TableCell, Table, TableBody } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import ButtonComponent from "../Components/Button";
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import { DataGrid } from '@material-ui/data-grid';
+import swal from 'sweetalert2';
 
 
 function Show() {
 
-     const [rows, setRows] = useState([]); 
+  const [rows, setRows] = useState([]);
 
-    /* const rows = [
-        { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-        { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-        { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-        { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-        { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-        { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-        { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-      ]; */
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 140 },
+    {
+      field: 'name',
+      headerName: 'Name',
+      width: 250,
+      editable: true,
+    },
+    {
+      field: 'password',
+      headerName: 'Password',
+      width: 250,
+      editable: true,
+    },
+    {
+      field: 'email',
+      headerName: 'Email',
+      width: 360,
+      editable: true,
+    },
+  ]
 
-    const columns = [
-            { field: 'id', headerName: 'ID', width: 140 },
-            {
-              field: 'name',
-              headerName: 'Name',
-              width: 250,
-              editable: true,
-            },
-            {
-              field: 'password',
-              headerName: 'Password',
-              width: 250,
-              editable: true,
-            },
-            {
-              field: 'email',
-              headerName: 'Email',
-              width: 360,
-              editable: true,
-            },
-    ]
-
-    useEffect(() => {
+  /*   useEffect(() => {
+      const interval = setInterval(() => {
         axios.get('http://localhost:5000/users/read').then(response => {
-            console.log(response.data);
-            console.log(response.data)
-            setRows(response.data);
-        })
-    }, [])
+          console.log(response.data);
+          console.log(response.data)
+          setRows(response.data);
+        },2000);
+       
+        return () => clearInterval(interval);
+    }, []);
+   */
 
-    return (
-        <div className="main">
-            <Typography>See All Users</Typography>
-            <p></p>
-            <div style={{ height: 400, width: '100%', backgroundColor: 'lightgray',}}>
-                <DataGrid 
 
-                rows={rows} 
-                columns={columns}
-                pageSize={5}
-                checkboxSelection
-                disableSelectionOnClick>
-                </DataGrid>
-            </div>
-            <p></p>
-            <Link to="/" style={{ textDecoration: 'none' }}><ButtonComponent text="Return"></ButtonComponent></Link>
-        </div>
-    )
+  function deleteAll() {
+    axios.get('http://localhost:5000/users/deleteall').then(response => {
+      console.log(response.data);
+      swal.fire({
+        icon: 'success',
+        title: 'All user deleted',
+        text: 'All database has been deleted'
+      })
+    })
+  }
+
+  function deleteid() {
+    axios.post('http://localhost:5000/users/deleteid',)
+  }
+
+  function handleRowSelection(e){
+    let selectedRow = rows.filter((r) => r.id === e.data.id);
+    console.log(selectedRow);
+  }
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/users/read').then(resp => {
+      setRows(resp.data);
+    })
+  }, [rows])
+
+
+  return (
+    <div className="main">
+      <Typography>All Users Cadastrated</Typography>
+      <p></p>
+      <div style={{ height: 300, width: '100%', backgroundColor: '' }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={5}
+          checkboxSelection
+          disableSelectionOnClick
+          onSelectionModelChange={console.log()}
+          >
+        </DataGrid>
+      </div>
+      <p></p>
+      <div className="buttons">
+        <ButtonComponent text="Delete All" function={deleteAll}></ButtonComponent>
+        <ButtonComponent text="Delete Selected" function={deleteid}></ButtonComponent>
+        <Link to="/" style={{ textDecoration: 'none' }}><ButtonComponent text="Return"></ButtonComponent></Link>
+      </div>
+
+    </div>
+  )
 }
 
 export default Show;

@@ -89,15 +89,6 @@ exports.read = async(req,res) =>{
         raw: true
     });
 
-    var TableNames =  AllData.map((item) => {
-        return item.name;
-    })
-
-    var TableIDs = AllData.map((item)=> {
-        return item.id;
-    })
-
-
     return res.json(AllData);
 
 }

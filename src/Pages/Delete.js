@@ -24,8 +24,6 @@ function Delete(){
     }
 
 
-
-
     return(
         <div className="main">
             <Typography>Delete Page</Typography>
