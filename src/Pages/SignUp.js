@@ -49,7 +49,7 @@ function SignUp() {
                 <TextField label="Email" {...register('Email')} autoComplete="off"></TextField>
                 <p></p>
                 <p className="errors">{errors.Email?.message}</p>
-                <Button type="submit" variant="contained" color="primary" style={{maxWidth: '130px', maxHeight: '50px', minWidth: '130px', minHeight:'50px'}}>Submit</Button>
+                <Button type="submit" variant="contained" color="primary" style={{maxWidth: '130px', maxHeight: '50px', minWidth: '130px', minHeight:'50px', marginRight: '20px'}}>Submit</Button>
                 <p></p>
                 <Link to="/" style={{ textDecoration : 'none'}}><ButtonComponent text="Return"></ButtonComponent></Link>
             </form>

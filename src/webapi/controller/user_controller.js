@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 
+const bodyParser = require('body-parser');
+
+app.use(cors());
 app.use(express.json());
 
 
@@ -14,10 +18,10 @@ exports.signup = async (req, res) => {
     let txtName = req.body.Name;
     let txtPassword = req.body.Password;
     let txtEmail = req.body.Email;
- 
+
     console.log(txtName);
     console.log(txtPassword);
-    console.log("O email inserido é: "+ txtEmail);
+    console.log("O email inserido é: " + txtEmail);
 
     var validation = false;
 
@@ -25,7 +29,7 @@ exports.signup = async (req, res) => {
     const NewUserValidation = await User.findOne({ where: { email: txtEmail } }).then(
         count => {
             console.log(count)
-            if(count == null){
+            if (count == null) {
                 console.log(' null')
                 // New User Creation
                 User.create({
@@ -35,25 +39,25 @@ exports.signup = async (req, res) => {
                 })
                 validation = true;
             }
-            else{
+            else {
                 console.log('User already created')
 
             }
         }
     )
-    
-        //Create
-        /* const NewUser = await User.create({
-            name: txtName,
-            password: txtPassword,
-        }) */
-    
-    console.log("Validation just before exiting: "+ validation);
+
+    //Create
+    /* const NewUser = await User.create({
+        name: txtName,
+        password: txtPassword,
+    }) */
+
+    console.log("Validation just before exiting: " + validation);
     return res.json(validation);
 }
 
 //Sign In
-exports.sigin = async(req,res) => {
+exports.sigin = async (req, res) => {
 
     const database = require('../db');
     const User = require('../user');
@@ -65,11 +69,13 @@ exports.sigin = async(req,res) => {
 
     var login = false;
 
-    const LoginProcess = await User.findOne({ where: {
-        name : txtName,
-        password : txtPassword,
-        email : txtEmail
-    }}).then(
+    const LoginProcess = await User.findOne({
+        where: {
+            name: txtName,
+            password: txtPassword,
+            email: txtEmail
+        }
+    }).then(
         result => {
             login = true;
         }
@@ -79,7 +85,7 @@ exports.sigin = async(req,res) => {
 }
 
 //Read all data
-exports.read = async(req,res) =>{
+exports.read = async (req, res) => {
 
     const database = require('../db');
     const User = require('../user');
@@ -93,9 +99,27 @@ exports.read = async(req,res) =>{
 
 }
 
+//Delete Selected ID
+exports.deleteid = async (req, res) => {
+
+    const database = require('../db');
+    const User = require('../user');
+    await database.sync();
+
+    let IDselected = req.body.id;
+
+    await User.destroy({
+        where: {
+            id: IDselected
+        }
+    })
+
+    return res.json({});
+
+}
 
 //Delete All USers Code
-exports.deleteall = async(req, res) =>{
+exports.deleteall = async (req, res) => {
 
     console.log('inside destroyer')
     const database = require('../db');

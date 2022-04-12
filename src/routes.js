@@ -7,6 +7,7 @@ import Private from "./Pages/Private";
 import Show from "./Pages/Show";
 import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
+import Update from "./Pages/Update";
 
 function PrivateRoute({children}) {
     const auth = isUtils();
@@ -31,7 +32,7 @@ function Router() {
                 <Route path="/signin" element={<SignIn />}/>
                 <Route path="/signup" element={<SignUp />}/>
                 <Route path="/read" element={<Show />}/>
-                <Route path="/delete" element={<Delete />}/>
+                <Route path="/update" element={<Update />}/>
             </Routes>
         </BrowserRouter>
     )

@@ -12,8 +12,6 @@ function Home(){
             <p></p>
             <Link to="/signup" style={{ textDecoration: 'none'}}><ButtonComponent text="Sign Up"></ButtonComponent></Link>
             <p></p>
-            <Link to="/delete" style={{ textDecoration: 'none'}}><ButtonComponent text="Delete"></ButtonComponent></Link>
-            <p></p>
             <Link to="/read" style={{textDecoration: 'none'}}><ButtonComponent text="Show"></ButtonComponent></Link>
             <p></p>
             <Link to="/update" style={{textDecoration: 'none'}}><ButtonComponent text="Update"></ButtonComponent></Link>
