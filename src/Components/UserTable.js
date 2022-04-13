@@ -3,7 +3,7 @@ import {DataGrid} from '@material-ui/data-grid';
 import axios from 'axios';
 
 
-function UserTable() {
+function UserTable(props) {
 
     const [rows, setRows] = useState([]);
 
@@ -35,10 +35,10 @@ function UserTable() {
         })
     }, [rows]);
 
-    const [check, setCheck] = useState([]);
 
-    
-    
+    let check = window.localStorage.getItem('id');
+
+
 
     return (
         <div>
