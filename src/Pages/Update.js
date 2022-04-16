@@ -2,13 +2,20 @@ import { TextField, Typography } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import ButtonComponent from "../Components/Button";
 import { DataGrid } from "@material-ui/data-grid";
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from "axios";
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import updateSchema from "../Controller/UpdateSchema";
 
 
-function Update(){
+function Update() {
 
     const [rows, setRows] = useState([]);
+
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+        resolver: yupResolver(updateSchema),
+    })
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 140 },
@@ -38,7 +45,24 @@ function Update(){
         })
     }, [rows]);
 
-    return(
+
+    // User Update function
+    const OnSubmitUpdate = (data) => {
+
+        console.log(data);
+        data.id = window.localStorage.getItem('id');
+
+        console.log(data);
+        
+        axios.post('http://localhost:5000/users/update', data).then((resp) => {
+
+        })
+        reset();
+    }
+
+
+
+    return (
         <div className="main">
             <Typography>You are at Update Page</Typography>
             <p></p>
@@ -48,16 +72,25 @@ function Update(){
                     columns={columns}
                     pageSize={5}
                     checkboxSelection
-                    onSelectionModelChange={(itemIdSelected) => window.localStorage.setItem('id', itemIdSelected)}
+                    onSelectionModelChange={(itemIdselected) => window.localStorage.setItem('id', itemIdselected)}
                 >
                 </DataGrid>
             </div>
             <p></p>
             <Typography>Check which user to want to update</Typography>
             <p></p>
-            <TextField label='Name' color="primary" style={{ width: '10%'}}></TextField> <TextField label='Email' color="primary" style={{ width: '10%'}}></TextField> <TextField label={'Password'} color="primary" style={{ width: '10%'}}></TextField>
-            <p></p>
-            <Link to="/" style={{ textDecoration: 'none' }}><ButtonComponent text="Return"></ButtonComponent></Link>
+            <form onSubmit={handleSubmit(OnSubmitUpdate)}>
+                <TextField label='Name' {...register('Name')} color="primary" style={{ width: '10%' }}></TextField>
+                <p className="errors">{errors.Name?.message}</p>
+                <TextField label='Email' {...register('Email')} color="primary" style={{ width: '10%' }}></TextField>
+                <p className="errors">{errors.Email?.message}</p>
+                <TextField label='Password' {...register('Password')} color="primary" style={{ width: '10%' }}></TextField>
+                <p className="errors">{errors.Password?.message}</p>
+                <ButtonComponent text="Update" type='submit'></ButtonComponent>
+                <p></p>
+                <Link to="/" style={{ textDecoration: 'none' }}><ButtonComponent text="Return"></ButtonComponent></Link>
+            </form>
+
         </div>
     )
 }

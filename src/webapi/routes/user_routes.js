@@ -20,5 +20,8 @@ route.post('/deleteid', user_controller.deleteid);
 //Route for delete all User
 route.get('/deleteall', user_controller.deleteall);
 
+//Route for Update User
+route.post('/update', user_controller.update);
+
 
 module.exports = route;

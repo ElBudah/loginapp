@@ -135,3 +135,29 @@ exports.deleteall = async (req, res) => {
 
     return res.json(text);
 }
+
+exports.update = async(req,res) => {
+
+    const database = require('../db');
+    const User = require('../user');
+    await database.sync();
+
+    let NameUpdate = req.body.Name;
+    let PasswordUpdate = req.body.Password;
+    let EmailUpdate = req.body.Email;
+    let IDupdate = req.body.id;
+
+    console.log("O ID selecionado foi: " + IDupdate);
+
+
+    await User.update(
+        {name: NameUpdate},
+        {where: {
+            id: IDupdate
+        }}
+    );
+
+    return res.json({
+        ok: true
+    })
+}
