@@ -67,20 +67,22 @@ exports.sigin = async (req, res) => {
     let txtPassword = req.body.Password;
     let txtEmail = req.body.Email;
 
-    var login = false;
+    let login = false;
 
     const LoginProcess = await User.findOne({
         where: {
             name: txtName,
+            email: txtEmail,
             password: txtPassword,
-            email: txtEmail
         }
-    }).then(
-        result => {
-            login = true;
-        }
-    )
+    });
 
+    if (LoginProcess === null) {
+        login = false;
+    } else {
+        login = true;
+    }
+    console.log(login);
     return res.json(login);
 }
 
@@ -136,7 +138,8 @@ exports.deleteall = async (req, res) => {
     return res.json(text);
 }
 
-exports.update = async(req,res) => {
+//Update User Information
+exports.update = async (req, res) => {
 
     const database = require('../db');
     const User = require('../user');
@@ -151,10 +154,12 @@ exports.update = async(req,res) => {
 
 
     await User.update(
-        {name: NameUpdate},
-        {where: {
-            id: IDupdate
-        }}
+        { name: NameUpdate },
+        {
+            where: {
+                id: IDupdate
+            }
+        }
     );
 
     return res.json({

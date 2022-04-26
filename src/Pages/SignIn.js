@@ -7,6 +7,7 @@ import ButtonComponent from "../Components/Button";
 import {Link} from 'react-router-dom';
 import axios from "axios";
 import schema from "../Controller/Schema";
+import swal from 'sweetalert2';
 
 function SignIn(){
 
@@ -18,12 +19,18 @@ function SignIn(){
         console.log(data.Name);
         axios.post('http://localhost:5000/users/signin', data).then(response => {
                 console.log(response.data);
-                if(response.data){
+                if(response.data.login == true){
                     window.location.href = "/private"
                 }
                 else(
                     reset()
+                    
                 )
+                swal.fire({
+                    icon: 'error',
+                    title: 'Invalid',
+                    text: 'Invalid credentials'
+                });
         })
     }
 

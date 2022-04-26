@@ -7,6 +7,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import updateSchema from "../Controller/UpdateSchema";
+import swal from 'sweetalert2';
 
 
 function Update() {
@@ -39,12 +40,15 @@ function Update() {
         },
     ]
 
+    const clock = 4000;
     useEffect(() => {
-        axios.get('http://localhost:5000/users/read').then(resp => {
-            setRows(resp.data);
-        })
+        const id = setInterval(() => {
+            axios.get('http://localhost:5000/users/read').then(resp => {
+                setRows(resp.data);
+            })
+        }, clock);
+        return () => clearInterval(id);
     }, [rows]);
-
 
     // User Update function
     const OnSubmitUpdate = (data) => {
@@ -53,9 +57,16 @@ function Update() {
         data.id = window.localStorage.getItem('id');
 
         console.log(data);
-        
-        axios.post('http://localhost:5000/users/update', data).then((resp) => {
 
+        axios.post('http://localhost:5000/users/update', data).then((resp) => {
+            console.log(resp.data.ok);
+            if (resp.data.ok == true) {
+                swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Your data has been updated!'
+                })
+            }
         })
         reset();
     }
@@ -77,14 +88,14 @@ function Update() {
                 </DataGrid>
             </div>
             <p></p>
-            <Typography>Check which user to want to update</Typography>
+            <Typography>First select which user you want to update</Typography>
             <p></p>
             <form onSubmit={handleSubmit(OnSubmitUpdate)}>
-                <TextField label='Name' {...register('Name')} color="primary" style={{ width: '10%' }}></TextField>
+                <TextField label='New name' {...register('Name')} color="primary" style={{ width: '10%' }}></TextField>
                 <p className="errors">{errors.Name?.message}</p>
-                <TextField label='Email' {...register('Email')} color="primary" style={{ width: '10%' }}></TextField>
+                <TextField label='New email' {...register('Email')} color="primary" style={{ width: '10%' }}></TextField>
                 <p className="errors">{errors.Email?.message}</p>
-                <TextField label='Password' {...register('Password')} color="primary" style={{ width: '10%' }}></TextField>
+                <TextField label='New password' type={'password'} {...register('Password')} color="primary" style={{ width: '10%' }}></TextField>
                 <p className="errors">{errors.Password?.message}</p>
                 <ButtonComponent text="Update" type='submit'></ButtonComponent>
                 <p></p>

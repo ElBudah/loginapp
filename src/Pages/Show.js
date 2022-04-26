@@ -69,10 +69,13 @@ function Show() {
 
 
     useEffect(() => {
-        axios.get('http://localhost:5000/users/read').then(resp => {
-            setRows(resp.data);
-        })
-    }, [rows]);
+        const intervalid = setInterval(() => {
+            axios.get('http://localhost:5000/users/read').then(resp => {
+                setRows(resp.data);
+            })
+        }, 60000)
+        return () => clearInterval(intervalid)
+    }, []);
 
 
     return (
