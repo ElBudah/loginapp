@@ -61,21 +61,21 @@ function Show() {
         const data = {
             id: window.localStorage.getItem('id')
         }
-
         axios.post('http://localhost:5000/users/deleteid', data).then(resp => {
-            console.log('success');
+            console.log(resp.data.ok);
         })
     }
 
 
+    const clock = 3000;
     useEffect(() => {
         const intervalid = setInterval(() => {
             axios.get('http://localhost:5000/users/read').then(resp => {
                 setRows(resp.data);
             })
-        }, 60000)
+        }, clock)
         return () => clearInterval(intervalid)
-    }, []);
+    }, [rows]);
 
 
     return (
@@ -94,8 +94,8 @@ function Show() {
             </div>
             <p></p>
             <div className="buttons">
-                <ButtonComponent text="Delete All" function={deleteAll}></ButtonComponent>
-                <ButtonComponent text="Delete Selected" function={deleteid}></ButtonComponent>
+                <ButtonComponent text="Delete All" func={deleteAll}></ButtonComponent>
+                <ButtonComponent text="Delete Selected" func={deleteid}></ButtonComponent>
                 <Link to="/" style={{ textDecoration: 'none' }}><ButtonComponent text="Return"></ButtonComponent></Link>
             </div>
 

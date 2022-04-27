@@ -1,4 +1,4 @@
-import { TextField, Typography } from "@material-ui/core";
+import { Button, TextField, Typography } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import ButtonComponent from "../Components/Button";
 import { DataGrid } from "@material-ui/data-grid";
@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Modal, makeStyles, Fade, Backdrop } from "@material-ui/core";
 import updateSchema from "../Controller/UpdateSchema";
 import swal from 'sweetalert2';
 
@@ -66,11 +67,50 @@ function Update() {
                     title: 'Success',
                     text: 'Your data has been updated!'
                 })
+            }else {
+                swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Update Failed!'
+                })
             }
         })
         reset();
     }
 
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+
+    const useStyles = makeStyles((theme) => ({
+        modal: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            
+        },
+        paper: {
+            backgroundColor: theme.palette.background.paper,
+            border: '2px solid #000',
+            boxShadow: theme.shadows[5],
+            padding: theme.spacing(2, 4, 3),
+            width: 400,
+        },
+    }));
+
+    const body = (
+        <div>
+            <h3>This is just a test</h3>
+        </div>
+    );
+
+    const classes = useStyles();
 
 
     return (
@@ -90,17 +130,41 @@ function Update() {
             <p></p>
             <Typography>First select which user you want to update</Typography>
             <p></p>
-            <form onSubmit={handleSubmit(OnSubmitUpdate)}>
-                <TextField label='New name' {...register('Name')} color="primary" style={{ width: '10%' }}></TextField>
-                <p className="errors">{errors.Name?.message}</p>
-                <TextField label='New email' {...register('Email')} color="primary" style={{ width: '10%' }}></TextField>
-                <p className="errors">{errors.Email?.message}</p>
-                <TextField label='New password' type={'password'} {...register('Password')} color="primary" style={{ width: '10%' }}></TextField>
-                <p className="errors">{errors.Password?.message}</p>
-                <ButtonComponent text="Update" type='submit'></ButtonComponent>
-                <p></p>
-                <Link to="/" style={{ textDecoration: 'none' }}><ButtonComponent text="Return"></ButtonComponent></Link>
-            </form>
+
+            <ButtonComponent text="Update" func={handleOpen}></ButtonComponent>
+
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className={classes.modal}
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={open}>
+                    <div className={classes.paper}>
+                        <h2 id="transition-modal-title">Update Data</h2>
+                        <p id="transition-modal-description">react-transition-group animates me.</p>
+                        <form onSubmit={handleSubmit(OnSubmitUpdate)}>
+                            <TextField label='New name' {...register('Name')} color="primary" style={{ width: '80%' }}></TextField>
+                            <p className="errors">{errors.Name?.message}</p>
+                            <TextField label='New email' {...register('Email')} color="primary" style={{ width: '80%' }}></TextField>
+                            <p className="errors">{errors.Email?.message}</p>
+                            <TextField label='New password' type={'password'} {...register('Password')} color="primary" style={{ width: '80%' }}></TextField>
+                            <p className="errors">{errors.Password?.message}</p>
+                            <ButtonComponent text="Confirm" type='submit' func={handleClose}></ButtonComponent>
+                            <p></p>
+                        </form>
+                    </div>
+                </Fade>
+            </Modal>
+
+            <p></p>
+            <Link to="/" style={{ textDecoration: 'none' }}><ButtonComponent text="Return"></ButtonComponent></Link>
 
         </div>
     )

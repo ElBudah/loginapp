@@ -110,13 +110,19 @@ exports.deleteid = async (req, res) => {
 
     let IDselected = req.body.id;
 
+    let ok = false;
+
     await User.destroy({
         where: {
             id: IDselected
         }
+    }).then(function validation(){
+        ok = true
+    }).catch(function (err){
+        ok = false
     })
 
-    return res.json({});
+   return res.json({ok});
 
 }
 
@@ -152,17 +158,53 @@ exports.update = async (req, res) => {
 
     console.log("O ID selecionado foi: " + IDupdate);
 
+    if (IDupdate > 0) {
 
-    await User.update(
-        { name: NameUpdate },
-        {
-            where: {
-                id: IDupdate
-            }
+        if (NameUpdate !== ''){
+
+            await User.update(
+                { name: NameUpdate },
+                {
+                    where: {
+                        id: IDupdate
+                    }
+                }
+            );
+
         }
-    );
 
-    return res.json({
-        ok: true
-    })
+        if (PasswordUpdate !== ''){
+
+            await User.update(
+                { password: PasswordUpdate },
+                {
+                    where: {
+                        id: IDupdate
+                    }
+                }
+            );
+
+        }
+
+        if (EmailUpdate !== ''){
+
+            await User.update(
+                { email: EmailUpdate },
+                {
+                    where: {
+                        id: IDupdate
+                    }
+                }
+            );
+
+        }
+        return res.json({
+            ok: true
+        })
+
+    }else {
+        return res.json({
+            ok: false
+        })
+    }
 }

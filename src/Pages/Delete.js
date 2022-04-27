@@ -32,12 +32,6 @@ function Delete(){
             <p></p>
             <ButtonComponent text="Delete Id" function={deleteid}></ButtonComponent>
             <p></p>
-            <Select>
-                <MenuItem value={10}s
-                >Ten</MenuItem>
-
-            </Select>
-            <p></p>
             <Link to="/" style={{ textDecoration: 'none'}}><ButtonComponent text="Return"></ButtonComponent></Link>
         </div>
     )
