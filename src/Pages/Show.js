@@ -33,18 +33,6 @@ function Show() {
         },
     ]
 
-    /*   useEffect(() => {
-        const interval = setInterval(() => {
-          axios.get('http://localhost:5000/users/read').then(response => {
-            console.log(response.data);
-            console.log(response.data)
-            setRows(response.data);
-          },2000);
-         
-          return () => clearInterval(interval);
-      }, []);
-     */
-
 
     function deleteAll() {
         axios.get('http://localhost:5000/users/deleteall').then(response => {
@@ -66,8 +54,12 @@ function Show() {
         })
     }
 
+    const [selected,setSelected] = useState("")
 
-    const clock = 3000;
+    
+
+
+    const clock = 2000;
     useEffect(() => {
         const intervalid = setInterval(() => {
             axios.get('http://localhost:5000/users/read').then(resp => {
@@ -76,6 +68,7 @@ function Show() {
         }, clock)
         return () => clearInterval(intervalid)
     }, [rows]);
+
 
 
     return (
@@ -89,13 +82,14 @@ function Show() {
                     pageSize={5}
                     checkboxSelection
                     onSelectionModelChange={(itemIdSelected) => window.localStorage.setItem('id', itemIdSelected)}
+                    
                 >
                 </DataGrid>
             </div>
             <p></p>
             <div className="buttons">
                 <ButtonComponent text="Delete All" func={deleteAll}></ButtonComponent>
-                <ButtonComponent text="Delete Selected" func={deleteid}></ButtonComponent>
+                <ButtonComponent text="Delete Selected" disable={!selected} func={deleteid}></ButtonComponent>
                 <Link to="/" style={{ textDecoration: 'none' }}><ButtonComponent text="Return"></ButtonComponent></Link>
             </div>
 

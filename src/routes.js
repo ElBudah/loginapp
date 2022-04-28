@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import isUtils from "./Controller/isUtils";
-import Delete from "./Pages/Delete";
 import Home from "./Pages/Home";
 import Private from "./Pages/Private";
 import Show from "./Pages/Show";

@@ -157,8 +157,11 @@ exports.update = async (req, res) => {
     let IDupdate = req.body.id;
 
     console.log("O ID selecionado foi: " + IDupdate);
+    console.log('O Nome foi: ' + NameUpdate);
+    console.log('O email foi: ' + EmailUpdate);
+    console.log('A senha foi:' + PasswordUpdate);
 
-    if (IDupdate > 0) {
+    if (IDupdate > 0 && (NameUpdate !== '' || PasswordUpdate !== null || EmailUpdate != '')) {
 
         if (NameUpdate !== ''){
 
@@ -170,11 +173,8 @@ exports.update = async (req, res) => {
                     }
                 }
             );
-
         }
-
         if (PasswordUpdate !== ''){
-
             await User.update(
                 { password: PasswordUpdate },
                 {
@@ -183,9 +183,7 @@ exports.update = async (req, res) => {
                     }
                 }
             );
-
         }
-
         if (EmailUpdate !== ''){
 
             await User.update(
@@ -199,12 +197,12 @@ exports.update = async (req, res) => {
 
         }
         return res.json({
-            ok: true
+            ok: 1
         })
 
     }else {
         return res.json({
-            ok: false
+            ok: 2
         })
     }
 }

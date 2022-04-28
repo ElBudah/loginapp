@@ -41,7 +41,7 @@ function Update() {
         },
     ]
 
-    const clock = 4000;
+    const clock = 2000;
     useEffect(() => {
         const id = setInterval(() => {
             axios.get('http://localhost:5000/users/read').then(resp => {
@@ -54,24 +54,22 @@ function Update() {
     // User Update function
     const OnSubmitUpdate = (data) => {
 
-        console.log(data);
+
         data.id = window.localStorage.getItem('id');
 
-        console.log(data);
-
-        axios.post('http://localhost:5000/users/update', data).then((resp) => {
+        axios.post('http://localhost:5000/users/update', data).then(resp => {
             console.log(resp.data.ok);
-            if (resp.data.ok == true) {
+            if (resp.data.ok == 1) {
                 swal.fire({
                     icon: 'success',
                     title: 'Success',
                     text: 'Your data has been updated!'
                 })
-            }else {
+            } else {
                 swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Update Failed!'
+                    text: 'No data inserted!'
                 })
             }
         })
@@ -93,7 +91,7 @@ function Update() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            
+
         },
         paper: {
             backgroundColor: theme.palette.background.paper,
@@ -152,10 +150,11 @@ function Update() {
                         <form onSubmit={handleSubmit(OnSubmitUpdate)}>
                             <TextField label='New name' {...register('Name')} color="primary" style={{ width: '80%' }}></TextField>
                             <p className="errors">{errors.Name?.message}</p>
-                            <TextField label='New email' {...register('Email')} color="primary" style={{ width: '80%' }}></TextField>
-                            <p className="errors">{errors.Email?.message}</p>
                             <TextField label='New password' type={'password'} {...register('Password')} color="primary" style={{ width: '80%' }}></TextField>
                             <p className="errors">{errors.Password?.message}</p>
+                            <TextField label='New email' {...register('Email')} color="primary" style={{ width: '80%' }}></TextField>
+                            <p className="errors">{errors.Email?.message}</p>
+
                             <ButtonComponent text="Confirm" type='submit' func={handleClose}></ButtonComponent>
                             <p></p>
                         </form>
