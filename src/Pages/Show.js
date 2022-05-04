@@ -36,7 +36,6 @@ function Show() {
 
     function deleteAll() {
         axios.get('http://localhost:5000/users/deleteall').then(response => {
-            console.log(response.data);
             swal.fire({
                 icon: 'success',
                 title: 'All user deleted',
@@ -50,16 +49,24 @@ function Show() {
             id: window.localStorage.getItem('id')
         }
         axios.post('http://localhost:5000/users/deleteid', data).then(resp => {
-            console.log(resp.data.ok);
+            if (resp.data.ok) {
+                swal.fire({
+                    icon: 'success',
+                    title: 'User Deleted',
+                    text: 'The selected user has been deleted'
+                })
+            }else{
+                swal.fire({
+                    icon: 'warning',
+                    title: 'Warning',
+                    text: 'No ID selected'
+                })
+            }
+
         })
     }
 
-    const [selected,setSelected] = useState("")
-
-    
-
-
-    const clock = 2000;
+    const clock = 1500;
     useEffect(() => {
         const intervalid = setInterval(() => {
             axios.get('http://localhost:5000/users/read').then(resp => {
@@ -82,14 +89,14 @@ function Show() {
                     pageSize={5}
                     checkboxSelection
                     onSelectionModelChange={(itemIdSelected) => window.localStorage.setItem('id', itemIdSelected)}
-                    
+
                 >
                 </DataGrid>
             </div>
             <p></p>
             <div className="buttons">
                 <ButtonComponent text="Delete All" func={deleteAll}></ButtonComponent>
-                <ButtonComponent text="Delete Selected" disable={!selected} func={deleteid}></ButtonComponent>
+                <ButtonComponent text="Delete Selected" func={deleteid}></ButtonComponent>
                 <Link to="/" style={{ textDecoration: 'none' }}><ButtonComponent text="Return"></ButtonComponent></Link>
             </div>
 

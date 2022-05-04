@@ -15,9 +15,7 @@ function SignUp() {
     })
 
     const onSubmitData = (data) => {
-        console.log(data.Name);
         axios.post('http://localhost:5000/users/signup', data).then(response =>{
-            console.log("Validation: " + response.data)
             if(response.data == false){
                 swal.fire({
                     icon: 'error',

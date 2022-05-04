@@ -8,7 +8,7 @@ function Private(){
         <div className="main">
             <Typography>Private Page</Typography>
             <p></p>
-            <Typography>Congratulations! You have logged into the system</Typography>
+            <Typography>Congratulations! <br></br> You have logged into the system</Typography>
             <p></p>
             <Link to="/" style={{ textDecoration: 'none'}}><ButtonComponent text="Return"></ButtonComponent></Link>
         </div>

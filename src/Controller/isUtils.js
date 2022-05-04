@@ -1,6 +1,6 @@
 function isUtils(){
 
-    const a = true;
+    const a = window.localStorage.getItem('key');
     return a;
 }
 

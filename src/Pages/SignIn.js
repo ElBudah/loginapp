@@ -20,7 +20,9 @@ function SignIn() {
         axios.post('http://localhost:5000/users/signin', data).then(response => {
             console.log(response.data);
             if (response.data == true) {
+                window.localStorage.setItem('key',response.data);
                 window.location.href = "/private"
+
             }
             else{
                 reset()
@@ -38,10 +40,10 @@ return (
     <div className="main">
         <Typography>You are at Sign In page</Typography>
         <form onSubmit={handleSubmit(onSubmitData)}>
-            <TextField {...register("Name")} color="primary" label="Name" ></TextField>
+            <TextField {...register("Name")} color="primary" autoComplete="off" label="Name" ></TextField>
             <p></p>
             <p className="errors">{errors.Name?.message}</p>
-            <TextField {...register("Password")} color="primary" label="Password" type={"password"}></TextField>
+            <TextField {...register("Password")} color="primary" label="Password" autoComplete="off" type={"password"}></TextField>
             <p></p>
             <p className="errors">{errors.Password?.message}</p>
             <TextField {...register("Email")} autoComplete="off" color="primary" label="Email"></TextField>

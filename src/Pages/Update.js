@@ -41,7 +41,7 @@ function Update() {
         },
     ]
 
-    const clock = 2000;
+    const clock = 1500;
     useEffect(() => {
         const id = setInterval(() => {
             axios.get('http://localhost:5000/users/read').then(resp => {
@@ -53,8 +53,7 @@ function Update() {
 
     // User Update function
     const OnSubmitUpdate = (data) => {
-
-
+        
         data.id = window.localStorage.getItem('id');
 
         axios.post('http://localhost:5000/users/update', data).then(resp => {

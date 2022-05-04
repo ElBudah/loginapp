@@ -110,19 +110,24 @@ exports.deleteid = async (req, res) => {
 
     let IDselected = req.body.id;
 
+    console.log("ID selecionado:" + IDselected);
+
     let ok = false;
 
-    await User.destroy({
-        where: {
-            id: IDselected
-        }
-    }).then(function validation(){
-        ok = true
-    }).catch(function (err){
-        ok = false
-    })
+    if (IDselected !== '') {
+        await User.destroy({
+            where: {
+                id: IDselected
+            }
+        }).then(function validation() {
+            ok = true
+        }).catch(function (err) {
+            ok = false
+        })
+    }
 
-   return res.json({ok});
+
+    return res.json({ ok });
 
 }
 
@@ -163,7 +168,7 @@ exports.update = async (req, res) => {
 
     if (IDupdate > 0 && (NameUpdate !== '' || PasswordUpdate !== null || EmailUpdate != '')) {
 
-        if (NameUpdate !== ''){
+        if (NameUpdate !== '') {
 
             await User.update(
                 { name: NameUpdate },
@@ -174,7 +179,7 @@ exports.update = async (req, res) => {
                 }
             );
         }
-        if (PasswordUpdate !== ''){
+        if (PasswordUpdate !== null) {
             await User.update(
                 { password: PasswordUpdate },
                 {
@@ -184,7 +189,7 @@ exports.update = async (req, res) => {
                 }
             );
         }
-        if (EmailUpdate !== ''){
+        if (EmailUpdate !== '') {
 
             await User.update(
                 { email: EmailUpdate },
@@ -200,7 +205,7 @@ exports.update = async (req, res) => {
             ok: 1
         })
 
-    }else {
+    } else {
         return res.json({
             ok: 2
         })
